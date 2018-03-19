@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Firebase Led</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js">
+	</script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script>
+	//Bootstrap para estilos , jquery es una libreria de JavaScript para hacer uso de metodos para facilitar funciones en la pagina web
+	  // Initialize Firebase
+	  // ↓↓↓↓↓↓↓ Se saca de la consola de Firebase para enlazar a mi pagina y mi DB ↓↓↓↓↓
+	  var config = {
+	    apiKey: "AIzaSyBAR5FqrCnnICEhoIkgiWSmOpam0-M7pdU",
+	    authDomain: "apps-130af.firebaseapp.com",
+	    databaseURL: "https://apps-130af.firebaseio.com",
+	    projectId: "apps-130af",
+	    storageBucket: "apps-130af.appspot.com",
+	    messagingSenderId: "980311092646"
+	  };
+	  firebase.initializeApp(config);
+	</script>
+    </head>
+  <body>
+<br>
+<br>
+<br>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-primary">
+          <div class="panel-heading">Apps Móviles Firebase - Raspberry</div>
+          <div class="panel-body">
+             <div class="checkbox">
+               <label>
+                <input type="checkbox" id="checkLed1">Check para ENCENDER LED / Uncheck para APAGAR LED
+              </label>
+             </div>
+          </div>
+        </div>      
+      </div>
+    </div>
+  </div>
+  <script>
+
+// en la variable db vamos a cargar la rama del arbol de la DB llamado home 
+var db = firebase.database().ref('home');
+// último estado
+//Por consola obtenemos el valor de led1
+db.on('value', function(data){
+   console.log("data: ", data.val());
+   $("#checkLed1").prop('checked', data.val().led1);
+   $("#checkLed2").prop('checked', data.val().led2);
+});
+//Si presionamos, llamamos una vaiable estado, que recibe la información del check y con update actualizamos la db (Funciona como un diccionario de Python clave:valor)
+$("#checkLed1").click(function(){
+  var estado = $(this).is(':checked');
+  db.update({
+    led1:estado
+  });
+});
+
+</script>
+<center><p>Presentado por: Juan Sebastián Pastrana - Paula Andrea Motta</p></center>	
+</body>
+</html>
