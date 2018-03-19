@@ -52,7 +52,6 @@ var db = firebase.database().ref('home');
 db.on('value', function(data){
    console.log("data: ", data.val());
    $("#checkLed1").prop('checked', data.val().led1);
-   $("#checkLed2").prop('checked', data.val().led2);
 });
 //Si presionamos, llamamos una vaiable estado, que recibe la información del check y con update actualizamos la db (Funciona como un diccionario de Python clave:valor)
 $("#checkLed1").click(function(){
